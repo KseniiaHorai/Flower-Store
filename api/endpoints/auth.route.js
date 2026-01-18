@@ -1,17 +1,12 @@
 const express = require("express");
+const { signup, login, logout } = require("../handlers/auth.controller.js");
 
 const router = express.Router();
 
-router.get("/signup", (req, res) => {
-    res.send("signup");
-});
+router.get("/signup", signup);
 
-router.get("/login", (req, res) => {
-    res.send("login");
-});
+router.get("/login", login);
 
-router.get("/logout", (req, res) => {
-    res.send("logout");
-});
+router.get("/logout", logout);
 
 module.exports = router;
