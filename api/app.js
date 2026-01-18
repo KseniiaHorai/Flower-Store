@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 
 const authRoutes = require("./endpoints/auth.route.js");
+const setupDatabase = require("./lib/database.js");
 
 dotenv.config();
 
@@ -12,4 +13,6 @@ app.use("/api/auth", authRoutes);
 
 app.listen(PORT, () => {
     console.log("Listening on port 4000");
+
+    setupDatabase();
 });
