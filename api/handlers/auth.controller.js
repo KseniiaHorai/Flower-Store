@@ -21,7 +21,7 @@ const saveRefreshToken = async (userId, refreshToken) => {
         `refresh_token:${userId}`,
         refreshToken,
         "EX",
-        7 * 24 * 60 * 60,
+        10 * 24 * 60 * 60,
     );
 };
 
@@ -67,17 +67,57 @@ const signup = async (req, res) => {
             message: "User created successfully",
         });
     } catch (error) {
+        console.log("Signup error occured", error.message);
         res.status(500).json({ message: error.message });
     }
     // res.send("signup");
 };
 
 const login = async (req, res) => {
-    res.send("login");
+    try {
+        const { email, password } = req.body;
+        const newUser = await User.findOne({ email });
+
+        if (newUser && (await newUser.comparePassword(password))) {
+            const { accessToken, refreshToken } = getMyTokens(newUser._id);
+
+            await saveRefreshToken(newUser._id, refreshToken);
+            setCookies(res, accessToken, refreshToken);
+
+            res.json({
+                _id: newUser._id,
+                name: newUser.name,
+                email: newUser.email,
+                role: newUser.role,
+            });
+        }
+    } catch (error) {
+        console.log("Login error occured", error.message);
+        res.status(500).json({ message: error.message });
+    }
 };
 
 const logout = async (req, res) => {
-    res.send("logout");
+    try {
+        const refreshToken = req.cookies.refreshToken;
+        if (refreshToken) {
+            const decodedData = jwt.verify(
+                refreshToken,
+                process.env.SECRET_REFRESH_TOKEN,
+            );
+            await redis.del(`refresh_token:${decodedData.userId}`);
+        }
+        res.clearCookie("accessToken");
+        res.clearCookie("refreshToken");
+        res.json({ message: "Logout was successful" });
+    } catch (error) {
+        console.log("Logout error occured", error.message);
+        res.status(500).json({
+            message: "something is wrong with the server",
+            error: error.message,
+        });
+    }
+    // res.send("logout");
 };
 
 module.exports = {
