@@ -161,6 +161,11 @@ const refreshToken = async (req, res) => {
     }
 };
 
+//TODO: implement get profile
+// const getProfile = async (req, res) => {
+
+// };
+
 module.exports = {
     signup,
     login,

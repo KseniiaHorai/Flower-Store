@@ -3,6 +3,8 @@ const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 
 const authRoutes = require("./endpoints/auth.route.js");
+const productRoutes = require("./endpoints/product.route.js");
+
 const setupDatabase = require("./lib/database.js");
 
 dotenv.config();
@@ -14,6 +16,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
 
 app.listen(PORT, () => {
     console.log("Listening on port 4000");
