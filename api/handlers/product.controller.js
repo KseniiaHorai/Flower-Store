@@ -1,4 +1,6 @@
 const Product = require("../models/Product.js");
+const { redis } = require("../lib/redis.js");
+const claudinary = require("../lib/cloudinary.js");
 
 const getAllProducts = async (req, res) => {
     try {
@@ -33,4 +35,31 @@ const getFeaturedProducts = async (req, res) => {
     }
 };
 
-module.exports = { getAllProducts, getFeaturedProducts };
+const createProduct = async (req, res) => {
+    try {
+        const { name, description, price, image, category } = req.body;
+
+        let cloudinatyResponse = null;
+
+        if (image) {
+            cloudinatyResponse = await cloudinary.uploader.upload(image, {
+                folder: "myproducts",
+            });
+        }
+        const product = await Product.create({
+            name,
+            description,
+            price,
+            image: cloudinatyResponse?.secure_url
+                ? cloudinatyResponse.secure_url
+                : "",
+            category,
+        });
+        res.status(201).json(product);
+    } catch (error) {
+        console.log("Error in getFeaturedProducts controller", error.message);
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
+
+module.exports = { getAllProducts, getFeaturedProducts, createProduct };
