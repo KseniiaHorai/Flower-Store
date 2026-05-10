@@ -1,0 +1,14 @@
+const express = require("express");
+
+const { protectRoute } = require("../middleware/auth.middleware.js");
+const {
+    getCoupon,
+    validateCoupon,
+} = require("../handlers/coupon.controller.js");
+
+const router = express.Router();
+
+router.get("/", protectRoute, getCoupon);
+router.get("/validate", protectRoute, validateCoupon);
+
+module.exports = router;
