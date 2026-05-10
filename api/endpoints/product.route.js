@@ -8,8 +8,10 @@ const {
     getProductsByCategory,
     toggleFeaturedProduct,
 } = require("../handlers/product.controller.js");
-const { protectRoute } = require("../middleware/auth.middleware.js");
-const { adminRoute } = require("../middleware/auth.middleware.js");
+const {
+    protectRoute,
+    adminRoute,
+} = require("../middleware/auth.middleware.js");
 
 const router = express.Router();
 

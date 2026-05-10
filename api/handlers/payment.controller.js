@@ -2,7 +2,7 @@ const Coupon = require("../models/Coupon.js");
 const Order = require("../models/Order.js");
 const stripe = require("../lib/stripe.js");
 
-export const createCheckoutSession = async (req, res) => {
+const createCheckoutSession = async (req, res) => {
     try {
         const { products, couponCode } = req.body;
 
@@ -89,7 +89,7 @@ export const createCheckoutSession = async (req, res) => {
     }
 };
 
-export const checkoutSuccess = async (req, res) => {
+const checkoutSuccess = async (req, res) => {
     try {
         const { sessionId } = req.body;
         const session = await stripe.checkout.sessions.retrieve(sessionId);

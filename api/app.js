@@ -7,6 +7,7 @@ const productRoutes = require("./endpoints/product.route.js");
 const cartRoutes = require("./endpoints/cart.route.js");
 const couponRoutes = require("./endpoints/coupon.route.js");
 const paymentRoutes = require("./endpoints/payment.route.js");
+const analyticsRoutes = require("./endpoints/analytics.route.js");
 
 const setupDatabase = require("./lib/database.js");
 
@@ -23,6 +24,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/coupons", couponRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use("/api/analytics", analyticsRoutes);
 
 app.listen(PORT, () => {
     console.log("Listening on port 4000");
