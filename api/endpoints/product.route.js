@@ -6,6 +6,7 @@ const {
     deleteProduct,
     getRecommendedProducts,
     getProductsByCategory,
+    toggleFeaturedProduct,
 } = require("../handlers/product.controller.js");
 const { protectRoute } = require("../middleware/auth.middleware.js");
 const { adminRoute } = require("../middleware/auth.middleware.js");
@@ -17,6 +18,7 @@ router.get("/featured", getFeaturedProducts);
 router.get("/category/:category", getProductsByCategory);
 router.get("/recommendations", getRecommendedProducts);
 router.post("/", protectRoute, adminRoute, createProduct);
+router.patch("/:id", protectRoute, adminRoute, toggleFeaturedProduct);
 router.delete("/:id", protectRoute, adminRoute, deleteProduct);
 
 module.exports = router;
