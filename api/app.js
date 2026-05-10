@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 
 const authRoutes = require("./endpoints/auth.route.js");
 const productRoutes = require("./endpoints/product.route.js");
+const cartRoutes = require("./endpoints/cart.route.js");
 
 const setupDatabase = require("./lib/database.js");
 
@@ -17,6 +18,7 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/cart", cartRoutes);
 
 app.listen(PORT, () => {
     console.log("Listening on port 4000");
