@@ -162,13 +162,18 @@ const refreshToken = async (req, res) => {
 };
 
 //TODO: implement get profile
-// const getProfile = async (req, res) => {
-
-// };
+const getProfile = async (req, res) => {
+    try {
+        res.json(req.user);
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
 
 module.exports = {
     signup,
     login,
     logout,
     refreshToken,
+    getProfile,
 };
