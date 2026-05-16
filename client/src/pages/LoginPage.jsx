@@ -2,24 +2,16 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { LogIn, Mail, Lock, ArrowRight, Loader } from "lucide-react";
+import { useUserStore } from "../stores/useUserStore";
 
 const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const loading = false;
-
-    // Заглушка замість useUserStore()
-    const login = async (email, password) => {
-        console.log("Login:", email, password);
-
-        // fake delay
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        alert("Logged in successfully!");
-    };
+    const { login, loading } = useUserStore();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(email, password);
         login(email, password);
     };
 

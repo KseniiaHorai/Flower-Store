@@ -7,6 +7,8 @@ const {
     getProfile,
 } = require("../handlers/auth.controller.js");
 
+const { protectRoute } = require("../middleware/auth.middleware.js");
+
 const router = express.Router();
 
 router.post("/signup", signup);
