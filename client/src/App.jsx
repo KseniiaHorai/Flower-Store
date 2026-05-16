@@ -3,6 +3,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
+import LoadingSpinner from "./components/LoadingSpinner.jsx";
 
 import Navbar from "./components/Navbar.jsx";
 import { Toaster } from "react-hot-toast";
@@ -10,11 +11,15 @@ import { useUserStore } from "./stores/useUserStore";
 
 function App() {
     const [count, setCount] = useState(0);
-    const { user, checkAuth } = useUserStore();
+    const { user, checkAuth, checkingAuth } = useUserStore();
 
     useEffect(() => {
         checkAuth();
     }, [checkAuth]);
+
+    if (checkingAuth) {
+        return <LoadingSpinner />;
+    }
 
     return (
         <div
