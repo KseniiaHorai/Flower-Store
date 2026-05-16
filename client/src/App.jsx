@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Route, Routes, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
@@ -10,7 +10,11 @@ import { useUserStore } from "./stores/useUserStore";
 
 function App() {
     const [count, setCount] = useState(0);
-    const { user } = useUserStore();
+    const { user, checkAuth } = useUserStore();
+
+    useEffect(() => {
+        checkAuth();
+    }, [checkAuth]);
 
     return (
         <div
@@ -51,10 +55,13 @@ function App() {
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<HomePage />} />
-                    <Route path="/signup" element={<SignUpPage />} />
+                    <Route
+                        path="/signup"
+                        element={!user ? <SignUpPage /> : <Navigate to="/" />}
+                    />
                     <Route
                         path="/login"
-                        element={user ? <HomePage /> : <LoginPage />}
+                        element={!user ? <LoginPage /> : <Navigate to="/" />}
                     />
                 </Routes>
             </div>
