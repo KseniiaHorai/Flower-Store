@@ -1,9 +1,10 @@
 import { ShoppingCart, UserPlus, LogIn, LogOut, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useUserStore } from "../stores/useUserStore";
 
 const Navbar = () => {
-    const user = false;
-    const isAdmin = false;
+    const { user, logout } = useUserStore();
+    const isAdmin = user?.role === "admin";
     const cartCount = 3;
 
     return (
@@ -88,7 +89,10 @@ const Navbar = () => {
                         )}
 
                         {user ? (
-                            <button className="flex items-center gap-1.5 text-xs font-medium text-pink-700 bg-pink-50 hover:bg-pink-100 border border-pink-200 hover:border-pink-300 px-3 py-1.5 rounded-lg transition-all duration-200 cursor-pointer">
+                            <button
+                                className="flex items-center gap-1.5 text-xs font-medium text-pink-700 bg-pink-50 hover:bg-pink-100 border border-pink-200 hover:border-pink-300 px-3 py-1.5 rounded-lg transition-all duration-200 cursor-pointer"
+                                onClick={logout}
+                            >
                                 <LogOut size={15} />
                                 <span className="hidden sm:inline">
                                     Log out
