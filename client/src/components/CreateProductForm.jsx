@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { PlusCircle, Upload, Loader } from "lucide-react";
+import { useProductStore } from "../stores/useProductStore";
 
 const categories = [
     "Asters",
@@ -20,12 +21,36 @@ const CreateProductForm = () => {
         image: "",
     });
 
-    const handleSubmit = (e) => {
+    const { createProduct, loading } = useProductStore();
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(newProduct);
+        try {
+            createProduct(newProduct);
+            setNewProduct({
+                name: "",
+                description: "",
+                price: "",
+                category: "",
+                image: "",
+            });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
-    const loading = false;
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                setNewProduct({ ...newProduct, image: reader.result });
+            };
+
+            reader.readAsDataURL(file);
+        }
+    };
 
     const inputClass = `
         mt-1 block w-full rounded-xl border border-black/5 bg-gray-50
@@ -162,16 +187,12 @@ const CreateProductForm = () => {
                         type="file"
                         id="image"
                         className="sr-only"
-                        onChange={(e) =>
-                            setNewProduct({
-                                ...newProduct,
-                                image: e.target.files[0]?.name || "",
-                            })
-                        }
+                        accept="image/*"
+                        onChange={handleImageChange}
                     />
                     {newProduct.image && (
                         <p className="mt-1.5 text-xs text-emerald-600">
-                            ✓ {newProduct.image}
+                            ✓ Image uploaded
                         </p>
                     )}
                 </div>

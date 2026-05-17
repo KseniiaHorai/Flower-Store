@@ -1,6 +1,6 @@
 const Product = require("../models/Product.js");
 const { redis } = require("../lib/redis.js");
-const claudinary = require("../lib/cloudinary.js");
+const cloudinary = require("../lib/cloudinary.js");
 
 const getAllProducts = async (req, res) => {
     try {
