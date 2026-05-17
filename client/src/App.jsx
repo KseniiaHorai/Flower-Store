@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import AdminPage from "./pages/AdminPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
+import CategoryPage from "./pages/CategoryPage.jsx";
 import LoadingSpinner from "./components/LoadingSpinner.jsx";
 
 import Navbar from "./components/Navbar.jsx";
@@ -78,6 +79,10 @@ function App() {
                                 <Navigate to="/login" />
                             )
                         }
+                    />
+                    <Route
+                        path="/category/:category"
+                        element={<CategoryPage />}
                     />
                 </Routes>
             </div>

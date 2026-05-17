@@ -1,8 +1,10 @@
 import { BarChart, PlusCircle, ShoppingBasket } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useProductStore } from "../stores/useProductStore";
 
 import CreateProductForm from "../components/CreateProductForm.jsx";
+import ProductsList from "../components/ProductsList.jsx";
 
 const tabs = [
     { id: "create", label: "Create Product", icon: PlusCircle },
@@ -12,10 +14,15 @@ const tabs = [
 
 const AdminPage = () => {
     const [activeTab, setActiveTab] = useState("create");
+    const { fetchAllProducts } = useProductStore();
+
+    useEffect(() => {
+        fetchAllProducts();
+    }, [fetchAllProducts]);
 
     return (
         <div className="min-h-screen relative overflow-hidden">
-            <div className="relative z-10 container mx-auto px-8 sm:px-12 lg:px-16 py-16 max-w-4xl">
+            <div className="relative z-10 container mx-auto px-8 sm:px-12 lg:px-16 py-16 max-w-2xl">
                 {/* Header */}
                 <motion.div
                     className="text-center mb-10"
@@ -69,12 +76,7 @@ const AdminPage = () => {
                     transition={{ duration: 0.3 }}
                 >
                     {activeTab === "create" && <CreateProductForm />}
-                    {activeTab === "products" && (
-                        <div className="text-gray-400 text-sm text-center py-8">
-                            {/* ProductsList goes here */}
-                            Products list coming soon…
-                        </div>
-                    )}
+                    {activeTab === "products" && <ProductsList />}
                     {activeTab === "analytics" && (
                         <div className="text-gray-400 text-sm text-center py-8">
                             {/* AnalyticsDashboard goes here */}

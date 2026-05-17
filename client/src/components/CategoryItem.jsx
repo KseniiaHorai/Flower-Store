@@ -4,7 +4,7 @@ import { Sprout } from "lucide-react";
 const CategoryItem = ({ category }) => {
     return (
         <Link
-            to={category.href}
+            to={"/category" + category.href}
             className="group rounded-xl overflow-hidden bg-white border border-black/5 hover:border-emerald-200 transition-all duration-300 hover:-translate-y-1"
         >
             {/* Image */}
