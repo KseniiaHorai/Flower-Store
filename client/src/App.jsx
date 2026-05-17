@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
+import AdminPage from "./pages/AdminPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import LoadingSpinner from "./components/LoadingSpinner.jsx";
 
@@ -67,6 +68,16 @@ function App() {
                     <Route
                         path="/login"
                         element={!user ? <LoginPage /> : <Navigate to="/" />}
+                    />
+                    <Route
+                        path="/secret-dashboard"
+                        element={
+                            user?.role === "admin" ? (
+                                <AdminPage />
+                            ) : (
+                                <Navigate to="/login" />
+                            )
+                        }
                     />
                 </Routes>
             </div>
