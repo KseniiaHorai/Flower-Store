@@ -1,23 +1,23 @@
 const Product = require("../models/Product.js");
-const addTOCart = async (req, res) => {
+const addToCart = async (req, res) => {
     try {
         const { productId } = req.body;
         const user = req.user;
 
-        const existingItem = user.cartItems.find(
+        const existingItem = user.cartContents.find(
             (item) => item.id === productId,
         );
 
         if (existingItem) {
             existingItem.quantity += 1;
         } else {
-            user.cartItems.push(productId);
+            user.cartContents.push(productId);
         }
 
         await user.save();
-        res.json(user.cartItems);
+        res.json(user.cartContents);
     } catch (error) {
-        console.log("Error in addTOCart controller", error.message);
+        console.log("Error in addToCart controller", error.message);
         res.status(500).json({ message: "Server error", error: error.message });
     }
 };
@@ -27,14 +27,14 @@ const removeAllFromCart = async (req, res) => {
         const { productId } = req.body;
         const user = req.user;
         if (!productId) {
-            user.cartItems = [];
+            user.cartContents = [];
         } else {
-            user.cartItems = user.cartItems.filter(
+            user.cartContents = user.cartContents.filter(
                 (item) => item.id !== productId,
             );
         }
         await user.save();
-        res.json(user.cartItems);
+        res.json(user.cartContents);
     } catch (error) {
         console.log("Error in removeAllFromCart controller", error.message);
         res.status(500).json({ message: "Server error", error: error.message });
@@ -46,22 +46,22 @@ const updateQuantity = async (req, res) => {
         const { id: productId } = req.params;
         const { quantity } = req.body;
         const user = req.user;
-        const existingItem = user.cartItems.find(
+        const existingItem = user.cartContents.find(
             (item) => item.id === productId,
         );
 
         if (existingItem) {
             if (quantity === 0) {
-                user.cartItems = user.cartItems.filter(
+                user.cartContents = user.cartContents.filter(
                     (item) => item.id !== productId,
                 );
                 await user.save();
-                return res.json(user.cartItems);
+                return res.json(user.cartContents);
             }
 
             existingItem.quantity = quantity;
             await user.save();
-            return res.json(user.cartItems);
+            return res.json(user.cartContents);
         } else {
             res.status(404).json({ message: "Item not found in cart" });
         }
@@ -71,27 +71,35 @@ const updateQuantity = async (req, res) => {
     }
 };
 
-const getCartProducts = async (req, res) => {
+const getCartItems = async (req, res) => {
     try {
         const products = await Product.find({
-            _id: { $in: req.user.cartItems },
+            _id: { $in: req.user.cartContents.map((item) => item.id || item) },
         });
-        const cartItems = products.map((product) => {
-            const item = req.user.cartItems.find(
-                (cartItem) => cartItem.id === product._id,
+
+        const cartContents = products.map((product) => {
+            const item = req.user.cartContents.find(
+                (cartItem) =>
+                    (cartItem.id || cartItem).toString() ===
+                    product._id.toString(),
             );
-            return { ...product.toJSON(), quantity: item.quantity };
+
+            return {
+                ...product.toJSON(),
+                quantity: item?.quantity || 1,
+            };
         });
-        res.json(cartItems);
+
+        res.json(cartContents);
     } catch (error) {
-        console.log("Error in getCartProducts controller", error.message);
+        console.log("Error in getCartItems controller", error.message);
         res.status(500).json({ message: "Server error", error: error.message });
     }
 };
 
 module.exports = {
-    addTOCart,
+    addToCart,
     removeAllFromCart,
     updateQuantity,
-    getCartProducts,
+    getCartItems,
 };

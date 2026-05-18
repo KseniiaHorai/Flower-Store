@@ -1,11 +1,12 @@
 import { ShoppingCart, UserPlus, LogIn, LogOut, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useUserStore } from "../stores/useUserStore";
+import { useCartStore } from "../stores/useCartStore";
 
 const Navbar = () => {
     const { user, logout } = useUserStore();
     const isAdmin = user?.role === "admin";
-    const cartCount = 3;
+    const { cart } = useCartStore();
 
     return (
         <header className="fixed top-0 left-0 w-full z-40 bg-white/70 backdrop-blur-xl border-b border-emerald-100 shadow-[0_1px_24px_rgba(134,239,172,0.08),0_1px_3px_rgba(0,0,0,0.04)]">
@@ -63,9 +64,10 @@ const Navbar = () => {
                             >
                                 <div className="relative">
                                     <ShoppingCart size={18} />
-                                    {cartCount > 0 && (
+
+                                    {cart.length > 0 && (
                                         <span className="absolute -top-1.5 -right-1.5 bg-gradient-to-br from-pink-400 to-pink-500 text-white rounded-full text-[10px] font-semibold px-1.5 leading-[14px] shadow-[0_1px_4px_rgba(236,72,153,0.4)] border-2 border-white">
-                                            {cartCount}
+                                            {cart.length}
                                         </span>
                                     )}
                                 </div>
