@@ -6,44 +6,65 @@ import ProductCard from "../components/ProductCard.jsx";
 
 const CategoryPage = () => {
     const { fetchProductsByCategory, products } = useProductStore();
-
     const { category } = useParams();
 
     useEffect(() => {
         fetchProductsByCategory(category);
     }, [fetchProductsByCategory, category]);
 
-    console.log("products:", products);
+    const displayName = category.charAt(0).toUpperCase() + category.slice(1);
+
     return (
         <div className="min-h-screen">
-            <div className="relative z-10 max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <motion.h1
-                    className="text-center text-4xl sm:text-5xl font-bold text-emerald-400 mb-8"
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                >
-                    {category.charAt(0).toUpperCase() + category.slice(1)}
-                </motion.h1>
-
+            <div className="max-w-4xl mx-auto px-8 sm:px-12 lg:px-16 py-16">
+                {/* Header — matches HomePage */}
                 <motion.div
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center"
-                    initial={{ opacity: 0, y: 20 }}
+                    className="text-center mb-12"
+                    initial={{ opacity: 0, y: -16 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
+                    transition={{ duration: 0.6 }}
                 >
-                    {products?.length === 0 && (
-                        <h2 className="text-3xl font-semibold text-gray-300 text-center col-span-full">
-                            No products found
-                        </h2>
-                    )}
-
-                    {products?.map((product) => (
-                        <ProductCard key={product._id} product={product} />
-                    ))}
+                    <div className="flex justify-center gap-2 mb-4">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-pink-300 animate-pulse delay-300" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse delay-700" />
+                    </div>
+                    <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight bg-gradient-to-r from-emerald-600 to-pink-600 bg-clip-text text-transparent mb-3">
+                        {displayName}
+                    </h1>
+                    <p className="text-gray-500 text-base">
+                        Seeds & seedlings · Dispatched fresh every Monday
+                    </p>
                 </motion.div>
+
+                {/* Grid */}
+                {products?.length === 0 ? (
+                    <motion.p
+                        className="text-center text-gray-400 text-base py-16"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                    >
+                        No products in this category yet — check back soon.
+                    </motion.p>
+                ) : (
+                    <motion.div
+                        className="grid grid-cols-2 sm:grid-cols-3 gap-4"
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                    >
+                        {products?.map((product, i) => (
+                            <ProductCard
+                                key={product._id}
+                                product={product}
+                                index={i}
+                            />
+                        ))}
+                    </motion.div>
+                )}
             </div>
         </div>
     );
 };
+
 export default CategoryPage;

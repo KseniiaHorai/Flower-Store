@@ -4,12 +4,12 @@ import { PlusCircle, Upload, Loader } from "lucide-react";
 import { useProductStore } from "../stores/useProductStore";
 
 const categories = [
-    "Asters",
-    "Poppies",
-    "Hydrangeas",
-    "Delphiniums",
-    "Peonies",
-    "Geraniums",
+    "asters",
+    "poppies",
+    "hydrangeas",
+    "delphiniums",
+    "peonies",
+    "geraniums",
 ];
 
 const CreateProductForm = () => {
