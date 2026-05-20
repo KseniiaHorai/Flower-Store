@@ -3,15 +3,16 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 import PeopleAlsoBought from "../components/PeopleAlsoBought.jsx";
+import GiftCouponCard from "../components/GiftCouponCard.jsx";
 import CartItem from "../components/CartItem.jsx";
+import OrderSummary from "../components/OrderSummary.jsx";
 
 const CartPage = () => {
-    const { cart, total, subtotal, coupon } = useCartStore();
+    const { cart } = useCartStore();
 
     return (
         <div className="min-h-screen">
             <div className="max-w-2xl mx-auto px-8 sm:px-12 lg:px-16 py-16">
-                {/* Header */}
                 <motion.div
                     className="mb-8"
                     initial={{ opacity: 0, y: -12 }}
@@ -31,25 +32,34 @@ const CartPage = () => {
                 {cart.length === 0 ? (
                     <EmptyCartUI />
                 ) : (
-                    <motion.div
-                        initial={{ opacity: 0, y: 12 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.1 }}
-                    >
-                        {/* Cart items */}
-                        <div className="flex flex-col gap-2.5 mb-6">
-                            {cart.map((item, i) => (
-                                <CartItem
-                                    key={item._id}
-                                    item={item}
-                                    index={i}
-                                />
-                            ))}
-                        </div>
+                    <>
+                        <motion.div
+                            initial={{ opacity: 0, y: 12 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.1 }}
+                        >
+                            <div className="flex flex-col gap-2.5 mb-6">
+                                {cart.map((item, i) => (
+                                    <CartItem
+                                        key={item._id}
+                                        item={item}
+                                        index={i}
+                                    />
+                                ))}
+                            </div>
+                        </motion.div>
 
-                        {/* Recommendations */}
-                        <PeopleAlsoBought />
-                    </motion.div>
+                        <motion.div
+                            className="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full"
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5, delay: 0.4 }}
+                        >
+                            <GiftCouponCard />
+                            <OrderSummary />
+                            <PeopleAlsoBought />
+                        </motion.div>
+                    </>
                 )}
             </div>
         </div>

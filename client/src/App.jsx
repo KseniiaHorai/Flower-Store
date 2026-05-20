@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage.jsx";
 import CategoryPage from "./pages/CategoryPage.jsx";
 import CartPage from "./pages/CartPage.jsx";
 import LoadingSpinner from "./components/LoadingSpinner.jsx";
+import PurchaseSuccessPage from "./pages/PurchaseSuccessPage.jsx";
 
 import Navbar from "./components/Navbar.jsx";
 import { Toaster } from "react-hot-toast";
@@ -94,6 +95,16 @@ function App() {
                     <Route
                         path="/cart"
                         element={user ? <CartPage /> : <Navigate to="/login" />}
+                    />
+                    <Route
+                        path="/purchase-success"
+                        element={
+                            user ? (
+                                <PurchaseSuccessPage />
+                            ) : (
+                                <Navigate to="/login" />
+                            )
+                        }
                     />
                 </Routes>
             </div>
