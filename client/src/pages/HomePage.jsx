@@ -1,4 +1,8 @@
+import { useEffect } from "react";
 import CategoryItem from "../components/CategoryItem";
+import { useProductStore } from "../stores/useProductStore";
+import { Feather } from "lucide-react";
+import FeaturedProducts from "../components/FeaturedProducts";
 
 const categories = [
     {
@@ -40,6 +44,12 @@ const categories = [
 ];
 
 const HomePage = () => {
+    const { fetchFeaturedProducts, products, loading } = useProductStore();
+
+    useEffect(() => {
+        fetchFeaturedProducts();
+    }, [fetchFeaturedProducts]);
+
     return (
         <div className="relative min-h-screen overflow-hidden">
             <div className="max-w-4xl mx-auto px-8 sm:px-12 lg:px-16 py-16">
@@ -62,6 +72,9 @@ const HomePage = () => {
                         <CategoryItem category={category} key={category.name} />
                     ))}
                 </div>
+                {!loading && products.length > 0 && (
+                    <FeaturedProducts featuredProducts={products} />
+                )}
             </div>
         </div>
     );
