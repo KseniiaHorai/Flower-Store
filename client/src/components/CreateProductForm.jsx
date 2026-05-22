@@ -21,12 +21,12 @@ const CreateProductForm = () => {
         image: "",
     });
 
-    const { createProduct, loading } = useProductStore();
+    const { createNewProduct, loading } = useProductStore();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            createProduct(newProduct);
+            createNewProduct(newProduct);
             setNewProduct({
                 name: "",
                 description: "",

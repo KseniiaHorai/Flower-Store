@@ -1,10 +1,10 @@
 const User = require("../models/User.js");
-const jwt = require("jsonwebtoken");
 const redis = require("../lib/redis.js");
+const jwt = require("jsonwebtoken");
 
 const getMyTokens = function (userId) {
     const accessToken = jwt.sign({ userId }, process.env.SECRET_ACCESS_TOKEN, {
-        expiresIn: "10m",
+        expiresIn: "15m",
     });
     const refreshToken = jwt.sign(
         { userId },
@@ -27,16 +27,16 @@ const saveRefreshToken = async (userId, refreshToken) => {
 
 const setCookies = (res, accessToken, refreshToken) => {
     res.cookie("accessToken", accessToken, {
-        httpOnly: true, //protect from XSS hacking
+        httpOnly: true, //against XSS hacking
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict", //prevents CSRF attacks
+        sameSite: "strict", //against CSRF attacks
         maxAge: 10 * 60 * 1000,
     });
 
     res.cookie("refreshToken", refreshToken, {
-        httpOnly: true, //protect from XSS hacking
+        httpOnly: true, //against XSS hacking
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict", //prevents CSRF attacks
+        sameSite: "strict", //against CSRF attacks
         maxAge: 10 * 24 * 60 * 60 * 1000,
     });
 };
@@ -70,7 +70,6 @@ const signup = async (req, res) => {
         console.log("Signup error occured", error.message);
         res.status(500).json({ message: error.message });
     }
-    // res.send("signup");
 };
 
 const login = async (req, res) => {
@@ -119,10 +118,7 @@ const logout = async (req, res) => {
             error: error.message,
         });
     }
-    // res.send("logout");
 };
-
-// this will refresh the access token
 const refreshToken = async (req, res) => {
     try {
         const refreshToken = req.cookies.refreshToken;
@@ -150,9 +146,9 @@ const refreshToken = async (req, res) => {
         );
 
         res.cookie("accessToken", accessToken, {
-            httpOnly: true, //protect from XSS hacking
+            httpOnly: true, //against XSS hacking
             secure: process.env.NODE_ENV === "production",
-            sameSite: "strict", //prevents CSRF attacks
+            sameSite: "strict", //against CSRF attacks
             maxAge: 10 * 60 * 1000,
         });
 
@@ -163,7 +159,6 @@ const refreshToken = async (req, res) => {
     }
 };
 
-//TODO: implement get profile
 const getProfile = async (req, res) => {
     try {
         res.json(req.user);

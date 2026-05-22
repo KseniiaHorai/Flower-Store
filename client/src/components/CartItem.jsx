@@ -3,7 +3,7 @@ import { useCartStore } from "../stores/useCartStore";
 import { motion } from "framer-motion";
 
 const CartItem = ({ item, index = 0 }) => {
-    const { removeFromCart, updateQuantity } = useCartStore();
+    const { deleteFromCart, updateMyQuantity } = useCartStore();
 
     return (
         <motion.div
@@ -32,7 +32,9 @@ const CartItem = ({ item, index = 0 }) => {
             {/* Quantity controls */}
             <div className="flex items-center gap-2 flex-shrink-0">
                 <button
-                    onClick={() => updateQuantity(item._id, item.quantity - 1)}
+                    onClick={() =>
+                        updateMyQuantity(item._id, item.quantity - 1)
+                    }
                     className="w-[26px] h-[26px] rounded-lg border-[1.5px] border-gray-100 bg-white flex items-center justify-center text-gray-400 hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-600 transition-all duration-200"
                 >
                     <Minus size={12} />
@@ -41,7 +43,9 @@ const CartItem = ({ item, index = 0 }) => {
                     {item.quantity}
                 </span>
                 <button
-                    onClick={() => updateQuantity(item._id, item.quantity + 1)}
+                    onClick={() =>
+                        updateMyQuantity(item._id, item.quantity + 1)
+                    }
                     className="w-[26px] h-[26px] rounded-lg border-[1.5px] border-gray-100 bg-white flex items-center justify-center text-gray-400 hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-600 transition-all duration-200"
                 >
                     <Plus size={12} />
@@ -55,7 +59,7 @@ const CartItem = ({ item, index = 0 }) => {
 
             {/* Delete */}
             <button
-                onClick={() => removeFromCart(item._id)}
+                onClick={() => deleteFromCart(item._id)}
                 className="w-[30px] h-[30px] rounded-[10px] border-[1.5px] border-gray-100 bg-white flex items-center justify-center text-gray-300 hover:border-pink-200 hover:bg-pink-50 hover:text-pink-500 transition-all duration-200 flex-shrink-0"
             >
                 <Trash size={13} />

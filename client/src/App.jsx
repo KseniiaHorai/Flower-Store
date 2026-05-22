@@ -18,15 +18,15 @@ import { useCartStore } from "./stores/useCartStore.js";
 function App() {
     const [count, setCount] = useState(0);
     const { user, checkAuth, checkingAuth } = useUserStore();
-    const { getCartItems } = useCartStore();
+    const { receiveCartItems } = useCartStore();
 
     useEffect(() => {
         checkAuth();
     }, [checkAuth]);
 
     useEffect(() => {
-        getCartItems();
-    }, [getCartItems]);
+        receiveCartItems();
+    }, [receiveCartItems]);
 
     if (checkingAuth) {
         return <LoadingSpinner />;

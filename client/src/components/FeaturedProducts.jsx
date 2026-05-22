@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 const FeaturedProducts = ({ featuredProducts }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [itemsPerPage, setItemsPerPage] = useState(3);
-    const { addToCart } = useCartStore();
+    const { addItemToCart } = useCartStore();
 
     useEffect(() => {
         const handleResize = () => {
@@ -92,7 +92,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
                                             </span>
                                             <button
                                                 onClick={() =>
-                                                    addToCart(product)
+                                                    addItemToCart(product)
                                                 }
                                                 className="flex items-center gap-1.5 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:opacity-90 hover:-translate-y-px text-white text-[11px] font-medium px-2.5 py-1.5 rounded-lg transition-all duration-200"
                                             >

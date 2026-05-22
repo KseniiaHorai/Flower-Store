@@ -6,7 +6,7 @@ import { useCartStore } from "../stores/useCartStore";
 
 const ProductCard = ({ product, index = 0 }) => {
     const { user } = useUserStore();
-    const { addToCart } = useCartStore();
+    const { addItemToCart } = useCartStore();
 
     const handleAddToCart = () => {
         if (!user) {
@@ -15,7 +15,7 @@ const ProductCard = ({ product, index = 0 }) => {
             });
             return;
         }
-        addToCart(product);
+        addItemToCart(product);
     };
 
     return (

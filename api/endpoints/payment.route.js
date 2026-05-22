@@ -1,14 +1,14 @@
 const express = require("express");
 
-const { protectRoute } = require("../middleware/auth.middleware.js");
+const { verifyRoute } = require("../middleware/auth.middleware.js");
 const {
-    checkoutSuccess,
-    createCheckoutSession,
+    handleCheckoutSuccess,
+    handleCheckoutSession,
 } = require("../handlers/payment.controller.js");
 
 const router = express.Router();
 
-router.post("/create-checkout-session", protectRoute, createCheckoutSession);
-router.post("/checkout-success", protectRoute, checkoutSuccess);
+router.post("/create-checkout-session", verifyRoute, handleCheckoutSession);
+router.post("/checkout-success", verifyRoute, handleCheckoutSuccess);
 
 module.exports = router;

@@ -1,26 +1,26 @@
 const express = require("express");
 const {
-    getAllProducts,
-    getFeaturedProducts,
-    createProduct,
-    deleteProduct,
-    getRecommendedProducts,
-    getProductsByCategory,
-    toggleFeaturedProduct,
+    retrieveAllProducts,
+    getStarredProducts,
+    createNewProduct,
+    removeProduct,
+    getSuggestedProducts,
+    fetchProductsByCategory,
+    toggleStarredProduct,
 } = require("../handlers/product.controller.js");
 const {
-    protectRoute,
-    adminRoute,
+    verifyRoute,
+    adminOnlyRoute,
 } = require("../middleware/auth.middleware.js");
 
 const router = express.Router();
 
-router.get("/", protectRoute, adminRoute, getAllProducts);
-router.get("/featured", getFeaturedProducts);
-router.get("/category/:category", getProductsByCategory);
-router.get("/recommendations", getRecommendedProducts);
-router.post("/", protectRoute, adminRoute, createProduct);
-router.patch("/:id", protectRoute, adminRoute, toggleFeaturedProduct);
-router.delete("/:id", protectRoute, adminRoute, deleteProduct);
+router.get("/", verifyRoute, adminOnlyRoute, retrieveAllProducts);
+router.get("/featured", getStarredProducts);
+router.get("/category/:category", fetchProductsByCategory);
+router.get("/recommendations", getSuggestedProducts);
+router.post("/", verifyRoute, adminOnlyRoute, createNewProduct);
+router.patch("/:id", verifyRoute, adminOnlyRoute, toggleStarredProduct);
+router.delete("/:id", verifyRoute, adminOnlyRoute, removeProduct);
 
 module.exports = router;

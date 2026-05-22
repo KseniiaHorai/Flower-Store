@@ -1,6 +1,6 @@
 const Coupon = require("../models/Coupon.js");
 
-const getCoupon = async (req, res) => {
+const getUserCoupon = async (req, res) => {
     try {
         const coupon = await Coupon.findOne({
             userId: req.user._id,
@@ -9,11 +9,11 @@ const getCoupon = async (req, res) => {
 
         res.json(coupon || null);
     } catch (error) {
-        console.log("Error in getCoupon controller", error.message);
+        console.log("Error in getUserCoupon controller", error.message);
         res.status(500).json({ message: "Server error", error: error.message });
     }
 };
-const validateCoupon = async (req, res) => {
+const checkCouponValidity = async (req, res) => {
     try {
         const { code } = req.body;
 
@@ -39,9 +39,9 @@ const validateCoupon = async (req, res) => {
             discountPercentage: coupon.discountPercentage,
         });
     } catch (error) {
-        console.log("Error in validateCoupon controller", error.message);
+        console.log("Error in checkCouponValidity controller", error.message);
         res.status(500).json({ message: "Server error", error: error.message });
     }
 };
 
-module.exports = { getCoupon, validateCoupon };
+module.exports = { getUserCoupon, checkCouponValidity };

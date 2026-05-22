@@ -1,7 +1,7 @@
 const User = require("../models/User.js");
 const jwt = require("jsonwebtoken");
 
-const protectRoute = async (req, res, next) => {
+const verifyRoute = async (req, res, next) => {
     try {
         const accessToken = req.cookies.accessToken;
 
@@ -36,12 +36,12 @@ const protectRoute = async (req, res, next) => {
             throw error;
         }
     } catch (error) {
-        console.log("Error in protectRoute middleware", error.message);
+        console.log("Error in verifyRoute middleware", error.message);
         return res.status(401).json({ message: "Unauthorized" });
     }
 };
 
-const adminRoute = async (req, res, next) => {
+const adminOnlyRoute = async (req, res, next) => {
     if (req.user && req.user.role === "admin") {
         next();
     } else {
@@ -49,4 +49,4 @@ const adminRoute = async (req, res, next) => {
     }
 };
 
-module.exports = { protectRoute, adminRoute };
+module.exports = { verifyRoute, adminOnlyRoute };

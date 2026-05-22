@@ -7,7 +7,7 @@ export const useProductStore = create((set) => ({
     loading: false,
 
     setProducts: (products) => set({ products }),
-    createProduct: async (productData) => {
+    createNewProduct: async (productData) => {
         set({ loading: true });
         try {
             const res = await axios.post("/products", productData);
@@ -44,7 +44,7 @@ export const useProductStore = create((set) => ({
             );
         }
     },
-    deleteProduct: async (productId) => {
+    removeProduct: async (productId) => {
         set({ loading: true });
         try {
             await axios.delete(`/products/${productId}`);
@@ -61,7 +61,7 @@ export const useProductStore = create((set) => ({
             );
         }
     },
-    toggleFeaturedProduct: async (productId) => {
+    toggleStarredProduct: async (productId) => {
         set({ loading: true });
         try {
             const response = await axios.patch(`/products/${productId}`);

@@ -5,12 +5,17 @@ import { Tag, X } from "lucide-react";
 
 const GiftCouponCard = () => {
     const [userInputCode, setUserInputCode] = useState("");
-    const { coupon, isCouponApplied, applyCoupon, getMyCoupon, removeCoupon } =
-        useCartStore();
+    const {
+        coupon,
+        isCouponApplied,
+        useMyCoupon,
+        receiveMyCoupon,
+        deleteCoupon,
+    } = useCartStore();
 
     useEffect(() => {
-        getMyCoupon();
-    }, [getMyCoupon]);
+        receiveMyCoupon();
+    }, [receiveMyCoupon]);
 
     useEffect(() => {
         if (coupon) setUserInputCode(coupon.code);
@@ -18,11 +23,11 @@ const GiftCouponCard = () => {
 
     const handleApplyCoupon = () => {
         if (!userInputCode) return;
-        applyCoupon(userInputCode);
+        useMyCoupon(userInputCode);
     };
 
     const handleRemoveCoupon = async () => {
-        await removeCoupon();
+        await deleteCoupon();
         setUserInputCode("");
     };
 

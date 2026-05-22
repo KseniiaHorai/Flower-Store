@@ -8,14 +8,14 @@ import { motion } from "framer-motion";
 
 const PurchaseSuccessPage = () => {
     const [isProcessing, setIsProcessing] = useState(true);
-    const { clearCart } = useCartStore();
+    const { emptyCart } = useCartStore();
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const handleCheckoutSuccess = async (sessionId) => {
             try {
                 await axios.post("/payments/checkout-success", { sessionId });
-                clearCart();
+                emptyCart();
             } catch (error) {
                 console.log(error);
             } finally {
@@ -32,7 +32,7 @@ const PurchaseSuccessPage = () => {
             setIsProcessing(false);
             setError("No session ID found in the URL");
         }
-    }, [clearCart]);
+    }, [emptyCart]);
 
     if (isProcessing) return "Processing...";
     if (error) return `Error: ${error}`;

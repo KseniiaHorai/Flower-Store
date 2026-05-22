@@ -1,5 +1,5 @@
 const Product = require("../models/Product.js");
-const addToCart = async (req, res) => {
+const addItemToCart = async (req, res) => {
     try {
         const { productId } = req.body;
         const user = req.user;
@@ -17,12 +17,12 @@ const addToCart = async (req, res) => {
         await user.save();
         res.json(user.cartContents);
     } catch (error) {
-        console.log("Error in addToCart controller", error.message);
+        console.log("Error in addItemToCart controller", error.message);
         res.status(500).json({ message: "Server error", error: error.message });
     }
 };
 
-const removeAllFromCart = async (req, res) => {
+const deleteAllFromCart = async (req, res) => {
     try {
         const productId = req.body?.productId;
         const user = req.user;
@@ -38,11 +38,11 @@ const removeAllFromCart = async (req, res) => {
         await user.save();
         res.json(user.cartContents);
     } catch (error) {
-        console.log("Error in removeAllFromCart controller", error.message);
+        console.log("Error in deleteAllFromCart controller", error.message);
         res.status(500).json({ message: "Server error", error: error.message });
     }
 };
-const updateQuantity = async (req, res) => {
+const updateMyQuantity = async (req, res) => {
     try {
         const { id: productId } = req.params;
         const { quantity } = req.body;
@@ -67,12 +67,12 @@ const updateQuantity = async (req, res) => {
             res.status(404).json({ message: "Item not found in cart" });
         }
     } catch (error) {
-        console.log("Error in updateQuantity controller", error.message);
+        console.log("Error in updateMyQuantity controller", error.message);
         res.status(500).json({ message: "Server error", error: error.message });
     }
 };
 
-const getCartItems = async (req, res) => {
+const receiveCartItems = async (req, res) => {
     try {
         const products = await Product.find({
             _id: { $in: req.user.cartContents.map((item) => item.id || item) },
@@ -93,14 +93,14 @@ const getCartItems = async (req, res) => {
 
         res.json(cartContents);
     } catch (error) {
-        console.log("Error in getCartItems controller", error.message);
+        console.log("Error in receiveCartItems controller", error.message);
         res.status(500).json({ message: "Server error", error: error.message });
     }
 };
 
 module.exports = {
-    addToCart,
-    removeAllFromCart,
-    updateQuantity,
-    getCartItems,
+    addItemToCart,
+    deleteAllFromCart,
+    updateMyQuantity,
+    receiveCartItems,
 };

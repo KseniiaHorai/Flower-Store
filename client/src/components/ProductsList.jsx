@@ -36,8 +36,7 @@ const categoryColors = {
 };
 
 const ProductsList = () => {
-    const { deleteProduct, toggleFeaturedProduct, products } =
-        useProductStore();
+    const { removeProduct, toggleStarredProduct, products } = useProductStore();
 
     return (
         <motion.div
@@ -108,7 +107,7 @@ const ProductsList = () => {
                                 {/* Feature star */}
                                 <button
                                     onClick={() =>
-                                        toggleFeaturedProduct(product._id)
+                                        toggleStarredProduct(product._id)
                                     }
                                     className={`flex-shrink-0 w-[34px] h-[34px] rounded-xl border-[1.5px] flex items-center justify-center transition-all duration-200
                                         ${
@@ -134,7 +133,7 @@ const ProductsList = () => {
 
                                 {/* Delete */}
                                 <button
-                                    onClick={() => deleteProduct(product._id)}
+                                    onClick={() => removeProduct(product._id)}
                                     className="flex-shrink-0 w-[34px] h-[34px] rounded-xl border-[1.5px] border-gray-100 bg-white flex items-center justify-center text-gray-300 hover:bg-pink-50 hover:border-pink-200 hover:text-pink-500 transition-all duration-200"
                                     title="Delete"
                                 >

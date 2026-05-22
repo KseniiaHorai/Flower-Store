@@ -1,10 +1,10 @@
 const Order = require("../models/Order.js");
-const Product = require("../models/Product.js");
 const User = require("../models/User.js");
+const Product = require("../models/Product.js");
 
-const getAnalyticsData = async () => {
-    const totalUsers = await User.countDocuments();
-    const totalProducts = await Product.countDocuments();
+const loadAnalyticsData = async () => {
+    const allUsers = await User.countDocuments();
+    const allProducts = await Product.countDocuments();
 
     const salesData = await Order.aggregate([
         {
@@ -22,14 +22,14 @@ const getAnalyticsData = async () => {
     };
 
     return {
-        users: totalUsers,
-        products: totalProducts,
+        users: allUsers,
+        products: allProducts,
         totalSales,
         totalRevenue,
     };
 };
 
-const getDailySalesData = async (startDate, endDate) => {
+const loadDailySalesData = async (startDate, endDate) => {
     try {
         const dailySalesData = await Order.aggregate([
             {
@@ -55,17 +55,7 @@ const getDailySalesData = async (startDate, endDate) => {
             { $sort: { _id: 1 } },
         ]);
 
-        // example of dailySalesData
-        // [
-        // 	{
-        // 		_id: "2024-08-18",
-        // 		sales: 12,
-        // 		revenue: 1450.75
-        // 	},
-        // ]
-
-        const dateArray = getDatesInRange(startDate, endDate);
-        // console.log(dateArray) // ['2024-08-18', '2024-08-19', ... ]
+        const dateArray = listDatesInRange(startDate, endDate);
 
         return dateArray.map((date) => {
             const foundData = dailySalesData.find((item) => item._id === date);
@@ -81,7 +71,7 @@ const getDailySalesData = async (startDate, endDate) => {
     }
 };
 
-function getDatesInRange(startDate, endDate) {
+function listDatesInRange(startDate, endDate) {
     const dates = [];
     let currentDate = new Date(startDate);
 
@@ -94,6 +84,6 @@ function getDatesInRange(startDate, endDate) {
 }
 
 module.exports = {
-    getAnalyticsData,
-    getDailySalesData,
+    loadAnalyticsData,
+    loadDailySalesData,
 };
