@@ -90,6 +90,8 @@ const login = async (req, res) => {
                 email: newUser.email,
                 role: newUser.role,
             });
+        } else {
+            res.status(400).json({ message: "Invalid credentials" });
         }
     } catch (error) {
         console.log("Login error occured", error.message);
