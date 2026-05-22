@@ -69,7 +69,7 @@ const PurchaseSuccessPage = () => {
                     </div>
 
                     {/* Title */}
-                    <h1 className="text-2xl sm:text-3xl font-semibold text-center tracking-tight bg-gradient-to-r from-emerald-600 to-pink-600 bg-clip-text text-transparent pb-1 mb-2">
+                    <h1 className="text-2xl sm:text-3xl font-semibold text-center tracking-tight bg-gradient-to-r from-emerald-600 to-pink-600 bg-clip-text text-transparent pb-3 mb-2">
                         Purchase Successful!
                     </h1>
 

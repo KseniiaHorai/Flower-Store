@@ -29,7 +29,7 @@ const CategoryPage = () => {
                         <span className="w-1.5 h-1.5 rounded-full bg-pink-300 animate-pulse delay-300" />
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse delay-700" />
                     </div>
-                    <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight bg-gradient-to-r from-emerald-600 to-pink-600 bg-clip-text text-transparent mb-3">
+                    <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight bg-gradient-to-r from-emerald-600 to-pink-600 bg-clip-text text-transparent mb-3 pbs-3.5">
                         {displayName}
                     </h1>
                     <p className="text-gray-500 text-base">

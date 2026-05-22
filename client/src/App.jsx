@@ -8,6 +8,7 @@ import CategoryPage from "./pages/CategoryPage.jsx";
 import CartPage from "./pages/CartPage.jsx";
 import LoadingSpinner from "./components/LoadingSpinner.jsx";
 import PurchaseSuccessPage from "./pages/PurchaseSuccessPage.jsx";
+import PurchaseCancelPage from "./pages/PurchaseCancelPage.jsx";
 
 import Navbar from "./components/Navbar.jsx";
 import { Toaster } from "react-hot-toast";
@@ -101,6 +102,16 @@ function App() {
                         element={
                             user ? (
                                 <PurchaseSuccessPage />
+                            ) : (
+                                <Navigate to="/login" />
+                            )
+                        }
+                    />
+                    <Route
+                        path="/purchase-cancel"
+                        element={
+                            user ? (
+                                <PurchaseCancelPage />
                             ) : (
                                 <Navigate to="/login" />
                             )

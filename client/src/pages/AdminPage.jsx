@@ -5,6 +5,7 @@ import { useProductStore } from "../stores/useProductStore";
 
 import CreateProductForm from "../components/CreateProductForm.jsx";
 import ProductsList from "../components/ProductsList.jsx";
+import AnalyticsTab from "../components/AnalyticsTab.jsx";
 
 const tabs = [
     { id: "create", label: "Create Product", icon: PlusCircle },
@@ -35,7 +36,7 @@ const AdminPage = () => {
                         <span className="w-1.5 h-1.5 rounded-full bg-pink-300 animate-pulse delay-300" />
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse delay-700" />
                     </div>
-                    <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight bg-gradient-to-r from-emerald-600 to-pink-600 bg-clip-text text-transparent mb-3">
+                    <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight bg-gradient-to-r from-emerald-600 to-pink-600 bg-clip-text text-transparent mb-3 pb-3">
                         Admin Dashboard
                     </h1>
                     <p className="text-gray-500 text-base">
@@ -77,12 +78,7 @@ const AdminPage = () => {
                 >
                     {activeTab === "create" && <CreateProductForm />}
                     {activeTab === "products" && <ProductsList />}
-                    {activeTab === "analytics" && (
-                        <div className="text-gray-400 text-sm text-center py-8">
-                            {/* AnalyticsDashboard goes here */}
-                            Analytics coming soon…
-                        </div>
-                    )}
+                    {activeTab === "analytics" && <AnalyticsTab />}
                 </motion.div>
             </div>
         </div>
